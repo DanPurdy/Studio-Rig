@@ -1,0 +1,61 @@
+body{
+	padding:0;
+	margin:0;
+
+}
+
+body{
+	background-color: #000;
+}
+
+h1{
+	color:#fff;
+	text-align: center;
+	margin:0;
+}
+
+#wrapper{
+	width:100%;
+	margin:0 auto;
+}
+
+.container{
+	position:relative;
+	width:1000px;
+	height:700px;
+	left:150px;
+	margin: 100px auto;
+}
+canvas{
+	background-color: #fff;
+	width:1000px;
+	height:700px;
+}
+
+#tools{
+	position:fixed;
+	background-color: #c3c2c4;
+	height:100%;
+	width:300px;
+	bottom:0px;
+	left:0px;
+
+}
+
+#tools li{
+	display:block;
+	border:1px solid #000;
+	width:50px;
+	height:50px;
+	padding:10px;
+	margin:10px;
+	text-align: center;
+}
+
+#tools li:hover{
+	cursor: pointer;
+}
+
+
+
+
