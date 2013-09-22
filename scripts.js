@@ -9,6 +9,8 @@ $(document).ready(function(){
 	selected = 0,
 	drawing = false,
 	chair = [], square = [], mic = [];
+	var startX,
+		startY;
 
 	function init(){
 		
@@ -51,7 +53,7 @@ $(document).ready(function(){
 
 	function drawMic(x,y){
 		ctx.beginPath();
-		ctx.arc(x, y, 8, 0, Math.PI*2, false);
+		ctx.arc(x, y, 4, 0, Math.PI*2, false);
 		ctx.fillStyle = "rgb(255, 255, 255)";
 		ctx.fill();
 		ctx.strokeStyle = "black";
@@ -72,14 +74,59 @@ $(document).ready(function(){
 	}
 
 	function drawScreen(x, y){
+		
+		var negX,
+			negY;
+
 		if (!drawing){
 			ctx.beginPath();
-			ctx.moveTo(x, y);
+			startX = x;
+			startY = y;
+			ctx.moveTo(startX, startY);
 			drawing=true;
 			canvas.style.cursor="crosshair";
-			console.log(x + ' :' + y);
+			
 		}else{
-			ctx.lineTo(x,y);
+			
+			var screenLength = 80;
+			var newPosX = x - startX;
+			var newPosY = y - startY;
+
+			if (newPosX < 0){ 
+				negX = true; 
+			}else{ 
+				negX = false; 
+			}
+			if (newPosY < 0){ 
+				negY = true; 
+			}else{ 
+				negY = false; 
+			}
+
+			var theta = newPosY/newPosX;
+
+			theta = Math.atan(theta);
+			theta = theta*180/Math.PI;
+
+			var cosX = Math.cos(theta * (Math.PI/180));
+
+			newPosX = cosX*screenLength;
+
+			newPosX *= newPosX;
+
+			screenLength*= screenLength;
+
+			newPosY = screenLength - newPosX;
+
+			newPosY = Math.sqrt(newPosY);
+			newPosX = Math.sqrt(newPosX);
+
+			(negX === true) ? newPosX *= -1: newPosX;
+			(negY === true) ? newPosY *= -1: newPosY;
+
+			
+
+			ctx.lineTo(startX + newPosX, startY + newPosY);
 			ctx.stroke();
 			drawing=false;
 			canvas.style.cursor="default";
