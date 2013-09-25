@@ -23,6 +23,13 @@ $(document).ready(function(){
 
 
 		ctx = canvas.getContext("2d");
+		
+		var imageObj = new Image();
+
+      	imageObj.onload = function() {
+        	ctx.drawImage(imageObj, 0, 0);
+      	};
+      	imageObj.src = 'img/studio1.png';
 	}
 
 	function selectTool(){
@@ -32,12 +39,12 @@ $(document).ready(function(){
 
 	function drawX(x, y){
 		ctx.beginPath();
-		ctx.moveTo(x - 7, y - 7);
-		ctx.lineTo(x + 7, y + 7);
+		ctx.moveTo(x - 8, y - 8);
+		ctx.lineTo(x + 8, y + 8);
 		ctx.stroke();
 
-		ctx.moveTo(x + 7, y - 7);
-		ctx.lineTo(x - 7, y + 7);
+		ctx.moveTo(x + 8, y - 8);
+		ctx.lineTo(x - 8, y + 8);
 		ctx.stroke();
 
 		chair.push([x, y]);
@@ -88,7 +95,7 @@ $(document).ready(function(){
 			
 		}else{
 			
-			var screenLength = 80;
+			var screenLength = 40;
 			var newPosX = x - startX;
 			var newPosY = y - startY;
 
@@ -127,6 +134,8 @@ $(document).ready(function(){
 			
 
 			ctx.lineTo(startX + newPosX, startY + newPosY);
+			ctx.lineWidth =3;
+			ctx.strokeStyle = '#0000ff';
 			ctx.stroke();
 			drawing=false;
 			canvas.style.cursor="default";
@@ -172,9 +181,17 @@ $(document).ready(function(){
 		}
 	}
 
+	function save(){
+
+		var w=window.open('about:blank','image from canvas');
+
+		w.document.write("<img src='"+canvas.toDataURL("image/png")+"' alt='from canvas'/>");
+	}
+
 
 	init();
 
 	$('#toolSel li').mouseup(selectTool);
 	$('#canvas1').mouseup(click);
+	$('.save').click(save);
 });
